@@ -7,20 +7,27 @@ Metrics: monitoring state of cameras (connected or disconnected) and time of las
 ## Installation
 For Debian, maybe packages name in Ubuntu the same.
 
-`apt-get install ruby ruby-dev gcc g++ make`
+`apt-get install python3 python3-pip`
 
-`gem install rest-client`
+`pip3 install requests`
 
-After it place all *.rb scripts to /etc/zabbix/externalscripts/ (create this directory)
+After it place all *.py scripts to /usr/lib/zabbix/externalscripts(create this directory)
 
 Add to scripts your NVR url and API key.
 
 Add following user parameters to /etc/zabbix/zabbix_agentd.conf:
 
 ```
-UserParameter=nvr.cam_list,/etc/zabbix/externalscripts/nvr_cam_discovery.rb
-UserParameter=nvr.cam_alive[*],/etc/zabbix/externalscripts/nvr_cam_alive.rb $1
-UserParameter=nvr.cam_last_record[*],/etc/zabbix/externalscripts/nvr_cam_lastrecord.rb $1
+UserParameter=nvr.cam_list,/etc/zabbix/externalscripts/nvr_cam_discovery.py
+UserParameter=nvr.cam_alive[*],/etc/zabbix/externalscripts/nvr_cam_alive.py $1
+UserParameter=nvr.cam_last_record[*],/etc/zabbix/externalscripts/nvr_cam_lastrecord.py $1
+```
+
+Create a .env file and put
+
+```
+NVR_URL=https://SERVER:7443
+API_KEY=YOUR_KEY
 ```
 
 And restart Zabbix agent.
